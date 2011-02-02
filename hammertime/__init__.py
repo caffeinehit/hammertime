@@ -40,8 +40,8 @@ except TypeError:
     opts.indent = None
 
 DIR = os.getcwd()
-FOLDER = os.path.join(DIR, opts.folder)
-FILE = os.path.join(FOLDER, opts.file)
+FOLDER = lambda repo: os.path.join(repo.working_dir, opts.folder)
+FILE = lambda repo: os.path.join(repo.working_dir, opts.folder, opts.file)
 
 try:
     cmd = args[0]
@@ -102,16 +102,16 @@ def init(repo, opts):
     getattr(repo.heads, opts.branch).checkout()
 
     # Make sure there's a folder
-    if not os.path.exists(FOLDER):
-        os.mkdir(FOLDER)
+    if not os.path.exists(FOLDER(repo)):
+        os.mkdir(FOLDER(repo))
 
     # And the data file
-    if not os.path.exists(FILE):
-        open(FILE, 'w').close()
+    if not os.path.exists(FILE(repo)):
+        open(FILE(repo), 'w').close()
 
     # Load the data
     try:
-        data = simplejson.load(open(FILE),object_hook = datetime_hook)
+        data = simplejson.load(open(FILE(repo)),object_hook = datetime_hook)
     except simplejson.decoder.JSONDecodeError:
         data = dict(times=[])
 
@@ -121,8 +121,8 @@ def init(repo, opts):
 
 
 def write(repo, opts, timer):
-    simplejson.dump(timer, open(FILE, 'w'), cls=DatetimeEncoder)
-    repo.index.add([FILE])
+    simplejson.dump(timer, open(FILE(repo), 'w'), cls=DatetimeEncoder)
+    repo.index.add([FILE(repo)])
     repo.index.commit(opts.message or 'Hammertime!')
 
 def start(repo, opts, timer):
@@ -148,6 +148,10 @@ def main():
 
     if cmd not in commands.keys():
         parser.print_usage()
+        sys.exit(1)
+
+    if len(repo.heads) == 0:
+        print "fata: No initial commit"
         sys.exit(1)
 
     try:
