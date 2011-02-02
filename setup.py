@@ -7,7 +7,7 @@ setup(
     version='0.1.2',
 
     description='Time tracking with git.',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     keywords='git time tracking',
     url='https://github.com/caffeinehit/hammertime',
     author='Alen Mujezinovic',
