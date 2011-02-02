@@ -16,11 +16,11 @@ usage = """git time [options]
 parser = optparse.OptionParser(usage)
 
 parser.add_option('-b','--branch', action='store', dest='branch',
-        default='git-time',
+        default='hammertime',
         help = 'Sets the name of the branch that saves timing data.')
 
 parser.add_option('-d','--dir', action='store', dest='folder',
-        default='.git-time', 
+        default='.hammertime', 
         help='Sets the folder that data is saved in.')
 
 parser.add_option('-f','--file', action='store', dest='file',
