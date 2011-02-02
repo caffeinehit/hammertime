@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
+import sys
+
 from setuptools import setup,find_packages
+
+install_requires = ['setuptools', ]
+# simplejson is included in the standard library since Python 2.6 as json.
+if sys.version_info[:2] < (2, 6):
+    install_requires.append('simplejson >= 2.1.1')
 
 setup(
     name='Hammertime',
@@ -22,10 +29,7 @@ setup(
             'git-time = hammertime:main',
         ],
     },
-    install_requires = [
-        'simplejson == 2.1.1',
-        'GitPython >= 0.3.0'
-    ],
+    install_requires = install_requires,
 
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -2,8 +2,16 @@ import os
 import sys
 import git
 import optparse
-import simplejson
 from datetime import datetime
+
+try:
+    import json
+except ImportError:
+    try:
+        import simplejson as json
+    except ImportError:
+        print "Error: simplejson required"
+        sys.exit(1)
 
 VERSION = (0,0,1)
 
@@ -49,7 +57,7 @@ except IndexError:
     cmd = 'default'
 
 
-class DatetimeEncoder(simplejson.JSONEncoder):
+class DatetimeEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
             return o.isoformat()
@@ -111,8 +119,8 @@ def init(repo, opts):
 
     # Load the data
     try:
-        data = simplejson.load(open(FILE(repo)),object_hook = datetime_hook)
-    except simplejson.decoder.JSONDecodeError:
+        data = json.load(open(FILE(repo)),object_hook = datetime_hook)
+    except ValueError:
         data = dict(times=[])
 
     timer = Timer()
@@ -121,7 +129,7 @@ def init(repo, opts):
 
 
 def write(repo, opts, timer):
-    simplejson.dump(timer, open(FILE(repo), 'w'), cls=DatetimeEncoder)
+    json.dump(timer, open(FILE(repo), 'w'), cls=DatetimeEncoder)
     repo.index.add([FILE(repo)])
     repo.index.commit(opts.message or 'Hammertime!')
 
@@ -132,7 +140,7 @@ def stop(repo, opts, timer):
     timer.stop(opts)
 
 def show(repo, opts, timer):
-    print simplejson.dumps(timer, indent=opts.indent, cls=DatetimeEncoder)
+    print json.dumps(timer, indent=opts.indent, cls=DatetimeEncoder)
 
 def default(repo, opts, timer):
     parser.print_usage()
