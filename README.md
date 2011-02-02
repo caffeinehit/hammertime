@@ -26,3 +26,9 @@ If you've got a [json command line utility](https://github.com/zpoley/json-comma
 ## Help
 
     $ git time -h
+
+## Note
+
+Invoking `git time stop` in sequence twice or more will always override
+the last `git time stop` entry. Invoking `git time start` will always
+create new entries.
