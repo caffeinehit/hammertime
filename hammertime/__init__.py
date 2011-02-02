@@ -165,7 +165,8 @@ def main():
         
         commands[cmd](repo, opts, timer)
 
-        write(repo, opts, timer)
+        if cmd in ['start','stop']:
+            write(repo, opts, timer)
     finally:
         # Switch back to old branch
         getattr(repo.heads, branch.name).checkout()
