@@ -151,8 +151,8 @@ def main():
         sys.exit(1)
 
     if len(repo.heads) == 0:
-        print """fatal: No initial commit. Perhaps create a master branch and an
-        inital commit."""
+        print """fatal: No initial commit. 
+       Perhaps create a master branch and an inital commit."""
         sys.exit(1)
 
     try:
