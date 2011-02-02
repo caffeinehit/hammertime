@@ -123,7 +123,7 @@ def init(repo, opts):
 def write(repo, opts, timer):
     simplejson.dump(timer, open(FILE, 'w'), cls=DatetimeEncoder)
     repo.index.add([FILE])
-    repo.index.commit('Timing')
+    repo.index.commit(opts.message or 'Hammertime!')
 
 def start(repo, opts, timer):
     timer.start(opts)
