@@ -151,7 +151,7 @@ def main():
         sys.exit(1)
 
     if len(repo.heads) == 0:
-        print "fata: No initial commit"
+        print "fatal: No initial commit"
         sys.exit(1)
 
     try:
