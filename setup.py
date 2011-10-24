@@ -4,14 +4,14 @@ import sys
 
 from setuptools import setup,find_packages
 
-install_requires = ['setuptools', ]
+install_requires = ['setuptools','GitPython' ]
 # simplejson is included in the standard library since Python 2.6 as json.
 if sys.version_info[:2] < (2, 6):
     install_requires.append('simplejson >= 2.1.1')
 
 setup(
     name='Hammertime',
-    version='0.1.3',
+    version='0.1.4',
 
     description='Time tracking with git.',
     long_description=open('README.rst').read(),
