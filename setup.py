@@ -1,17 +1,10 @@
 #!/usr/bin/env python
 
-import sys
-
 from setuptools import setup,find_packages
-
-install_requires = ['setuptools','GitPython' ]
-# simplejson is included in the standard library since Python 2.6 as json.
-if sys.version_info[:2] < (2, 6):
-    install_requires.append('simplejson >= 2.1.1')
 
 setup(
     name='Hammertime',
-    version='0.2.3',
+    version='0.2.4',
 
     description='Time tracking with git.',
     long_description=open('README.rst').read(),
@@ -29,7 +22,10 @@ setup(
             'git-time = hammertime:main',
         ],
     },
-    install_requires = install_requires,
+    
+    install_requires = [
+        'GitPython' 
+    ],
 
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -42,4 +38,5 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Software Development',
     ],
+    zip_safe = False,
 )
