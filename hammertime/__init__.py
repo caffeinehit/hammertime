@@ -2,7 +2,7 @@ import os
 import sys
 import git
 import optparse
-from datetime import datetime
+from datetime import datetime, timedelta
 
 try:
     import json
@@ -13,7 +13,7 @@ except ImportError:
         print "Error: simplejson required"
         sys.exit(1)
 
-VERSION = (0,0,1)
+VERSION = (0,1,0)
 
 usage = """git time [options]
    or: git time start [options]
@@ -139,13 +139,31 @@ def start(repo, opts, timer):
 def stop(repo, opts, timer):
     timer.stop(opts)
 
+def total(repo, opts, timer):
+    total = timedelta(seconds = 0)
+    
+    for time in timer['times']:
+        try:
+            bits = map(int, time['delta'].split(':'))
+            delta = (
+                timedelta(seconds = bits[0] * 3600)
+                + timedelta(seconds = bits[1] * 60)
+                + timedelta(seconds = bits[2])
+            )
+        except (KeyError, IndexError):
+            delta = timedelta(seconds = 0)
+    
+        total += delta
+    
+    print total
+
 def show(repo, opts, timer):
     print json.dumps(timer, indent=opts.indent, cls=DatetimeEncoder)
 
 def default(repo, opts, timer):
     parser.print_usage()
 
-commands=dict(start=start, stop=stop, show=show, default=default)
+commands=dict(start=start, stop=stop, show=show, default=default, total=total)
 
 def main():
     try:
