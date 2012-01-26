@@ -13,7 +13,7 @@ except ImportError:
         print "Error: simplejson required"
         sys.exit(1)
 
-__version__ == "0.2.1"
+__version__ = "0.2.1"
 
 usage = """git time [options]
    or: git time start [options]
