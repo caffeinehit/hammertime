@@ -11,7 +11,7 @@ if sys.version_info[:2] < (2, 6):
 
 setup(
     name='Hammertime',
-    version="0.2.2",
+    version='0.2.3',
 
     description='Time tracking with git.',
     long_description=open('README.rst').read(),
