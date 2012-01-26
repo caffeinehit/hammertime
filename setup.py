@@ -3,6 +3,7 @@
 import sys
 
 from setuptools import setup,find_packages
+import hammertime
 
 install_requires = ['setuptools','GitPython' ]
 # simplejson is included in the standard library since Python 2.6 as json.
@@ -11,7 +12,7 @@ if sys.version_info[:2] < (2, 6):
 
 setup(
     name='Hammertime',
-    version='0.1.4',
+    version=hammertime.__version__,
 
     description='Time tracking with git.',
     long_description=open('README.rst').read(),
